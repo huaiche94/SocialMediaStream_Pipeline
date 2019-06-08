@@ -20,7 +20,8 @@ lazy val dependencies = Seq(
   "org.slf4j" % "log4j-over-slf4j" % Versions.Slf4j,
   "ch.qos.logback" % "logback-classic" % Versions.Logback,
   "net.dean.jraw" % "JRAW" % Versions.JRAW,
-  "com.danielasfregola" %% "twitter4s" % Versions.Twitter4s
+  "com.danielasfregola" %% "twitter4s" % Versions.Twitter4s,
+  "com.typesafe" % "config" % Versions.TypesafeConfig
 )
 
 dependencyOverrides ++= Seq(
