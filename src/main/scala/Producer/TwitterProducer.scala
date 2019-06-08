@@ -11,15 +11,15 @@ class TwitterProducer(conf: Config) extends Runnable {
   def run = {
 
     val props = new Properties()
-    props.put("bootstrap.servers", "localhost:9092")
+    props.put("bootstrap.servers", conf.getString("kafkaServer"))
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 
     val producer = new KafkaProducer[String, String](props)
-    val topic="test"
+    val topic = conf.getString("socialMediaTopic")
 
     val streamingClient = TwitterStreamingClient()
-    val trackedWords = conf.getStringList("keywords").asScala.toList
+    val trackedWords = conf.getStringList("twitter.keywords").asScala.toList
 
     streamingClient.filterStatuses(tracks = trackedWords) {
       case tweet: Tweet =>
