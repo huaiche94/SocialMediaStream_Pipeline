@@ -28,7 +28,7 @@ object SocialMediaIngest extends App {
   }
 
   val builder: StreamsBuilder = new StreamsBuilder
-  val socialMediaTopic = conf.getString("socialMediaTopic")
+  val socialMediaTopic = conf.getString("inputTopic")
   val rawMessages: KStream[Long, String] = builder.stream[Long, String](socialMediaTopic)
   val stopwords = conf.getStringList("stopwords").asScala.toList
   val cleanMessages = rawMessages
@@ -41,7 +41,7 @@ object SocialMediaIngest extends App {
       )
       cleaned
     })
-  cleanMessages.to("WordsWithCountsTopic")
+  cleanMessages.to("outputTopic")
 
   val streams: KafkaStreams = new KafkaStreams(builder.build(), props)
   streams.start()

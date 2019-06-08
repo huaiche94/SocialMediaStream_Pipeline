@@ -18,7 +18,7 @@ class TwitterProducer(conf: Config) extends Runnable {
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 
     val producer = new KafkaProducer[String, String](props)
-    val topic = conf.getString("socialMediaTopic")
+    val topic = conf.getString("inputTopic")
 
     val streamingClient = TwitterStreamingClient()
     val trackedWords = conf.getStringList("twitter.keywords").asScala.toList
