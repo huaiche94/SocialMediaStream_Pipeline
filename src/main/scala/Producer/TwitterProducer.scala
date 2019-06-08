@@ -1,11 +1,13 @@
 package Producer
 
-import scala.collection.JavaConverters._
+import java.util.Properties
+
 import com.danielasfregola.twitter4s.TwitterStreamingClient
 import com.danielasfregola.twitter4s.entities.Tweet
-import com.typesafe.config.{Config, ConfigList}
-import java.util.Properties
+import com.typesafe.config.Config
 import org.apache.kafka.clients.producer._
+
+import scala.collection.JavaConverters._
 
 class TwitterProducer(conf: Config) extends Runnable {
   def run = {

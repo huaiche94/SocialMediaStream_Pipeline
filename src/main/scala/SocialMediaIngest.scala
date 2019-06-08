@@ -2,12 +2,12 @@ import java.time.Duration
 import java.util.Properties
 
 import Producer.{RedditProducer, TwitterProducer}
-import org.apache.kafka.streams.kstream.Materialized
+import com.typesafe.config.ConfigFactory
 import org.apache.kafka.streams.scala.ImplicitConversions._
 import org.apache.kafka.streams.scala._
 import org.apache.kafka.streams.scala.kstream._
 import org.apache.kafka.streams.{KafkaStreams, StreamsConfig}
-import com.typesafe.config.{Config, ConfigFactory}
+
 import scala.collection.JavaConverters._
 
 object SocialMediaIngest extends App {
