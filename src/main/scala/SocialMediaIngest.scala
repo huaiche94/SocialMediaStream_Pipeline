@@ -3,10 +3,12 @@ import java.util.Properties
 
 import Producer.{RedditProducer, TwitterProducer}
 import com.typesafe.config.ConfigFactory
+import io.getquill.{CassandraAsyncContext, SnakeCase}
 import org.apache.kafka.streams.scala.ImplicitConversions._
 import org.apache.kafka.streams.scala._
 import org.apache.kafka.streams.scala.kstream._
 import org.apache.kafka.streams.{KafkaStreams, StreamsConfig}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.collection.JavaConverters._
 
@@ -46,6 +48,22 @@ object SocialMediaIngest extends App {
   })
 
   cleanMessages.to("outputTopic")
+
+  // CONNECT TO CASSANDRA
+  val db = new CassandraAsyncContext(SnakeCase, "social")
+  import db._
+  case class Posts(timestamp: String, post: String)
+  object Posts {
+    val insertPost = quote {
+      (timestamp: String, post: String) =>
+        query[Posts].insert((Posts(timestamp, post)))
+    }
+  }
+
+  // SEND MESSAGES TO CASSANDRA
+  cleanMessages.foreach(
+    (timestamp: String, post: String) => db.run(Posts.insertPost(lift(timestamp), lift(post)))
+  )
 
   val streams: KafkaStreams = new KafkaStreams(builder.build(), props)
   streams.start()

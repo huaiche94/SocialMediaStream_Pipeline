@@ -21,7 +21,8 @@ lazy val dependencies = Seq(
   "ch.qos.logback" % "logback-classic" % Versions.Logback,
   "net.dean.jraw" % "JRAW" % Versions.JRAW,
   "com.danielasfregola" %% "twitter4s" % Versions.Twitter4s,
-  "com.typesafe" % "config" % Versions.TypesafeConfig
+  "com.typesafe" % "config" % Versions.TypesafeConfig,
+  "io.getquill" %% "quill-cassandra" % Versions.QuillCassandra
 )
 
 dependencyOverrides ++= Seq(

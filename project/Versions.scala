@@ -8,4 +8,5 @@ object Versions {
   val JRAW = "1.1.0"
   val Twitter4s = "6.1"
   val TypesafeConfig = "1.3.4"
+  val QuillCassandra = "3.2.2"
 }
