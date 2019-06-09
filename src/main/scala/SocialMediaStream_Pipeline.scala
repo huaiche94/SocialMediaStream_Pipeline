@@ -12,7 +12,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.collection.JavaConverters._
 
-object SocialMediaIngest extends App {
+object SocialMediaStream_Pipeline extends App {
   val conf = ConfigFactory.load()
 
   val redditProducer = new Thread(new RedditProducer(conf))
