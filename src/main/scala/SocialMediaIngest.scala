@@ -40,11 +40,12 @@ object SocialMediaIngest extends App {
       case _ => true
     }
     .mapValues((_, text) => {
-      println(text)
-      val result = text.split(" ")
+      val result = text.toLowerCase.split(" ")
         .filterNot(stopwords.contains(_))
         .foldLeft("")((res, word) => res + ' ' + word)
-    result
+      println("----------------------------------------------------------------------------")
+      println(result)
+      result
   })
 
   cleanMessages.to("outputTopic")
