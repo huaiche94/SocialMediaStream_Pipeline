@@ -8,6 +8,7 @@ It consists of two repos, `SocialMediaStream_Pipeline` [(here)](https://github.c
 `SocialMediaStream_Query` connects to Cassandra and executes a Spark Query that counts how many times specific keywords were mentioned in the posts.
 
 Pipeline visualized:
+
 ![Imgur](https://imgur.com/oOzq2p2.png)
 
 How to run `SocialMediaStream_Pipeline` locally:
