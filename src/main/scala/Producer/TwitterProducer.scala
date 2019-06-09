@@ -30,6 +30,8 @@ class TwitterProducer(conf: Config) extends Runnable {
         val record = new ProducerRecord(topic, epoch.toString, text)
         producer.send(record)
     }
-    producer.close()
+    sys.ShutdownHookThread {
+      producer.close()
+    }
   }
 }

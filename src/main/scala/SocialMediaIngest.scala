@@ -11,7 +11,7 @@ import org.apache.kafka.streams.{KafkaStreams, StreamsConfig}
 import scala.collection.JavaConverters._
 
 object SocialMediaIngest extends App {
-  val conf = ConfigFactory.load();
+  val conf = ConfigFactory.load()
 
   val redditProducer = new Thread(new RedditProducer(conf))
   val twitterProducer = new Thread(new TwitterProducer(conf))
@@ -29,18 +29,22 @@ object SocialMediaIngest extends App {
 
   val builder: StreamsBuilder = new StreamsBuilder
   val socialMediaTopic = conf.getString("inputTopic")
-  val rawMessages: KStream[Long, String] = builder.stream[Long, String](socialMediaTopic)
+  val rawMessages: KStream[String, String] = builder.stream[String, String](socialMediaTopic)
   val stopwords = conf.getStringList("stopwords").asScala.toList
   val cleanMessages = rawMessages
     // remove stop words
-    .mapValues(text => {
-      var cleaned = text
-      stopwords.foreach( stop => {
-        cleaned = text.replaceAll(stop, "")
-        }
-      )
-      cleaned
-    })
+    .filterNot {
+      case (_, s: String) => s == null | s == "" | s.isEmpty
+      case _ => true
+    }
+    .mapValues((_, text) => {
+      println(text)
+      val result = text.split(" ")
+        .filterNot(stopwords.contains(_))
+        .foldLeft("")((res, word) => res + ' ' + word)
+    result
+  })
+
   cleanMessages.to("outputTopic")
 
   val streams: KafkaStreams = new KafkaStreams(builder.build(), props)

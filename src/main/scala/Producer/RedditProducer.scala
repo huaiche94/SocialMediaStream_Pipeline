@@ -41,7 +41,7 @@ class RedditProducer(conf: Config) extends Runnable {
 
     // Authenticate our client
     val reddit = OAuthHelper.automatic(new OkHttpNetworkAdapter(userAgent), oauthCreds)
-
+    reddit.setLogHttp(false)
     subs.foreach(
       sub => {
         val paginator = reddit.subreddit(sub)
@@ -88,6 +88,9 @@ class RedditProducer(conf: Config) extends Runnable {
       val record = new ProducerRecord(topic, epoch.toString, text)
       producer.send(record)
     }
-    producer.close()
+
+    sys.ShutdownHookThread {
+      producer.close()
+    }
   }
 }
