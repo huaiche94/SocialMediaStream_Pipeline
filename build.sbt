@@ -1,4 +1,4 @@
-name := "DataDemo_A_Ingestion"
+name := "SocialMediaStream_Pipeline"
 
 version := "0.1"
 
