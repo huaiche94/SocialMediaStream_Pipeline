@@ -1,10 +1,14 @@
 # Social Media Stream Pipeline + Query
 
 A demo application for a POC involving Analytics of Social Media contributions.
-It consists of two repos, `SocialMediaStream_Pipeline` and `SocialMediaStream_Query`.
+It consists of two repos, `SocialMediaStream_Pipeline` [(here)](https://github.com/mionisation/SocialMediaStream_Pipeline) and `SocialMediaStream_Query` [(here)](https://github.com/mionisation/SocialMediaStream_Query).
 
-The pipeline looks all in all like this:
+`SocialMediaStream_Pipeline` consumes messages from Twitter and Reddit, streams and processes them over Kafka and then saves them to Cassandra. 
 
+`SocialMediaStream_Query` connects to Cassandra and executes a Spark Query that counts how many times specific keywords were mentioned in the posts.
+
+Pipeline visualized:
+![Imgur](https://imgur.com/oOzq2p2.png)
 
 How to run `SocialMediaStream_Pipeline` locally:
 
